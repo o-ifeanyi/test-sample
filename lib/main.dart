@@ -14,12 +14,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: MyHomePage(api: Api(client: http.Client())),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final Api api;
+
+  MyHomePage({@required this.api});
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -27,16 +30,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _joke = '';
   bool _isLoading = false;
-  Api _api = Api(client: http.Client());
+  Api _api;
 
-  void _getJoke() async {
-    setState(() {
-      _isLoading = true;
-    });
-    _joke = await _api.getRandomJoke();
-    setState(() {
-      _isLoading = false;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _api = widget.api;
   }
 
   @override
@@ -51,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _isLoading
                 ? CircularProgressIndicator()
                 : ElevatedButton(
+                    key: ValueKey('getJokeButton'),
                     onPressed: _getJoke,
                     child: Text('Get Joke'),
                   )
@@ -58,5 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void _getJoke() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _joke = await _api.getRandomJoke();
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
