@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Unit test example')),
+      appBar: AppBar(title: Text('Flutter test example')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
