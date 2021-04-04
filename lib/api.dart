@@ -19,7 +19,7 @@ class Api {
 
       if (response.statusCode == 200) {
         final joke = json.decode(response.body);
-        return '${joke['setup']}\n${joke['punchline']}';
+        return 'HERE\'S THE JOKE\n${joke['setup']}\n${joke['punchline']}';
       } else {
         return 'Something went wrong';
       }
